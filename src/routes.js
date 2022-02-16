@@ -4,22 +4,23 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
+import { Aside } from './components/Aside';
 
 //Pages
 import { Home } from './pages/Home';
+import { MainTemplate } from './templates/Main';
 
-//Components
-import { Header } from './components/Header';
 
 export const Routes = () => {
     return (
         <Router>
-            <Header />
             <Router>
-                <Switch>
-                    <Route exact path='/' component={Home} />
-                </Switch>
+                <MainTemplate>
+                    <Switch>
+                        <Route exact path='/' component={Home} />
+                    </Switch>
+                </MainTemplate>
             </Router>
         </Router>
     )
-}
+}   
