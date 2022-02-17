@@ -36,36 +36,57 @@ interface ResponseApi {
 
 export const Home: React.FC = () => {
 
-    // const [allTeams, setAllTeams] = useState<ResponseApi[]>([]);
+    const [allTeams, setAllTeams] = useState<ResponseApi[]>([]);
 
-    const [currentItems, setCurrentItems] = useState(null);
+    const [currentItems, setCurrentItems] = useState<ResponseApi[]>([]);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(10);
 
     useEffect(() => {
-        api.get('/teams?country=brazil')
-            .then((response) => {
-                console.log('resposta', response);
-                // const endOffset = itemOffset + itemsPerPage;
-                // setCurrentItems(items.slice(itemOffset, endOffset));
-            })
+
+        const fetchData = async () => {
+            const response = await api.get('/teams?country=brazil');
+            console.log(response);
+            const endOffset = itemOffset + itemsPerPage;
+            setAllTeams(response.data.response);
+            setCurrentItems(response.data.response.slice(itemOffset, endOffset));
+            setPageCount(Math.ceil(response.data.response.length / itemsPerPage))
+        }
+
+        fetchData()
+            .catch((err) => console.log(err));
+
     }, [])
+
+    const handlePageClick = (event: any) => {
+        const newOffset = (event.selected * itemsPerPage) % allTeams.length;
+        setItemOffset(newOffset);
+
+        const endOffset = itemOffset + itemsPerPage;
+
+        setCurrentItems(allTeams.slice(itemOffset, endOffset));
+        console.log('comeco', itemOffset);
+        console.log('fim', endOffset);
+    };
 
 
     //Get current posts
 
     return (
         <>
-            <h1>Home</h1>
-            <Teams currentTeams={currentPosts} />
+            <Teams currentTeams={currentItems} />
+
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"
                 onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={2}
                 pageCount={pageCount}
                 previousLabel="< previous"
+                containerClassName={"pagination"}
+                activeClassName={"active"}
             />
         </>
     )
