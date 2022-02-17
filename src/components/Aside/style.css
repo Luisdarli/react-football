@@ -1,15 +1,76 @@
-@import url('https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Open+Sans&display=swap');
+.highlight {
+    font-weight: 600;
+    color: #08d565;
+}
 
 .aside-navbar {
-    font-family: 'Akaya Telivigala', cursive;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
 
     color: #fff;
-    background-color: red;
+    background-color: #272440;
 
+    height: 100vh;
+    width: 30%;
+    overflow: auto;
     padding: 20px;
+}
+
+.aside-navbar__logo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.aside-navbar__logo span {
+    font-size: 25px;
+}
+
+.aside-navbar__logo img {
+    width: 80px;
+    height: auto;
+}
+
+.aside-navbar__nav {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.aside-navbar__nav ul {
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.aside-navbar__items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+    width: 90%;
+
+    background-color: #08d565;
+    padding: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+
+    transition: all 0.3s;
+}
+
+.aside-navbar__items:hover{
+    background-color: #059646;
+}
+
+.aside-navbar__items span {
+    margin: auto 0;
+
+    font-weight: 600;
+    font-size: 20px;
+    color: #fff;
+    margin-left: 12px;
 }

@@ -1,6 +1,20 @@
-.wrapper {
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.main-section {
     display: flex;
     flex-direction: column;
     padding: 50px;
-    background-color: green;
+    background-color: #191634;
+    width: 100%;
+}
+
+.content {
+    width: 90%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 30px;
 }

@@ -8,13 +8,13 @@ import { Aside } from '../../components/Aside';
 
 export const MainTemplate = ({ ...props }) => {
     return (
-        <>
+        <div className='wrapper'>
             <Aside />
-            <section className='wrapper'>
+            <section className='main-section'>
                 <main className='content'>
                     {props.children}
                 </main>
             </section>
-        </>
+        </div>
     )
 }
