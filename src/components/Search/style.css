@@ -1,0 +1,33 @@
+.main-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
+.main-input span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 25px;
+    border: 2px solid #454266;
+    border-radius: 15px;
+}
+
+.main-input input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    
+    color: #fff;
+    font-size: 20px;
+    
+}
+
+.main-input svg {
+    font-size: 18px;
+    color: #fff;
+}

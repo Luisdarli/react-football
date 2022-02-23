@@ -51,6 +51,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
+    align-items: center;
 
     width: 90%;
 
@@ -66,8 +67,13 @@
     background-color: #059646;
 }
 
+.aside-navbar__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .aside-navbar__items span {
-    margin: auto 0;
 
     font-weight: 600;
     font-size: 20px;

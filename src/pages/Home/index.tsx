@@ -6,7 +6,10 @@ import './style.css'
 
 //API
 import { api } from '../../services/api'
+
+//Components
 import { Teams } from '../../components/Teams';
+import { Search } from '../../components/Search';
 
 //Interface
 interface Team {
@@ -45,17 +48,17 @@ export const Home: React.FC = () => {
 
     useEffect(() => {
 
-        const fetchData = async () => {
-            const response = await api.get('/teams?country=brazil');
-            console.log(response);
-            const endOffset = itemOffset + itemsPerPage;
-            setAllTeams(response.data.response);
-            setCurrentItems(response.data.response.slice(itemOffset, endOffset));
-            setPageCount(Math.ceil(response.data.response.length / itemsPerPage))
-        }
+        // const fetchData = async () => {
+        //     const response = await api.get('/teams?country=brazil');
+        //     console.log(response);
+        //     const endOffset = itemOffset + itemsPerPage;
+        //     setAllTeams(response.data.response);
+        //     setCurrentItems(response.data.response.slice(itemOffset, endOffset));
+        //     setPageCount(Math.ceil(response.data.response.length / itemsPerPage))
+        // }
 
-        fetchData()
-            .catch((err) => console.log(err));
+        // fetchData()
+        //     .catch((err) => console.log(err));
 
     }, [])
 
@@ -66,6 +69,8 @@ export const Home: React.FC = () => {
         const endOffset = itemOffset + itemsPerPage;
 
         setCurrentItems(allTeams.slice(itemOffset, endOffset));
+        console.log('comeco', itemOffset);
+        console.log('fim', endOffset);
     };
 
 
@@ -73,9 +78,10 @@ export const Home: React.FC = () => {
 
     return (
         <>
+            <Search />
             <Teams currentTeams={currentItems} />
 
-            <ReactPaginate
+            {/* <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"
                 onPageChange={handlePageClick}
@@ -85,7 +91,7 @@ export const Home: React.FC = () => {
                 previousLabel="< previous"
                 containerClassName={"pagination"}
                 activeClassName={"active"}
-            />
+            /> */}
         </>
     )
 

@@ -19,7 +19,7 @@ export const Aside = () => {
                 <ul>
                     <li>
                         <div className='aside-navbar__items'>
-                            <div>
+                            <div className='aside-navbar__icon'>
                                 <FontAwesomeIcon icon={faHouse} />
                             </div>
                             <span>Home</span>
