@@ -66,8 +66,6 @@ export const Home: React.FC = () => {
         const endOffset = itemOffset + itemsPerPage;
 
         setCurrentItems(allTeams.slice(itemOffset, endOffset));
-        console.log('comeco', itemOffset);
-        console.log('fim', endOffset);
     };
 
 
