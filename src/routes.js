@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
+    BrowserRouter,
+    Routes,
     Switch,
     Route,
 } from "react-router-dom";
@@ -11,16 +12,14 @@ import { Home } from './pages/Home';
 import { MainTemplate } from './templates/Main';
 
 
-export const Routes = () => {
+export const RoutesApp = () => {
     return (
-        <Router>
-            <Router>
-                <MainTemplate>
-                    <Switch>
-                        <Route exact path='/' component={Home} />
-                    </Switch>
-                </MainTemplate>
-            </Router>
-        </Router>
+        <BrowserRouter>
+            <MainTemplate>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                </Routes>
+            </MainTemplate>
+        </BrowserRouter>
     )
 }   

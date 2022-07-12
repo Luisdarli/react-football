@@ -22,7 +22,7 @@ export const Teams = ({ currentTeams }: any) => {
                     <span>Capacidade: <p className='team-cards__highlight'>76212</p></span>
                 </div>
 
-                <span className='team-cards__venue'>Estádio: <p>Néo Quimica Arena</p></span>
+                <span className='team-cards__venue'>Estádio: <strong>Néo Quimica Arena</strong></span>
                 <p>Rua, Cidade - Estado, número </p>
             </div>
 

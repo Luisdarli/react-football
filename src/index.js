@@ -6,11 +6,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './index.css';
 
 //routes
-import { Routes } from './routes';
+import { RoutesApp } from './routes';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Routes />
+    <RoutesApp />
   </React.StrictMode>,
   document.getElementById('root')
 );
