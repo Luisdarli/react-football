@@ -11,7 +11,7 @@
     color: #fff;
     background-color: #272440;
 
-    height: 100vh;
+    min-height: 100vh;
     width: 30%;
     overflow: auto;
     padding: 20px;
@@ -63,7 +63,7 @@
     transition: all 0.3s;
 }
 
-.aside-navbar__items:hover{
+.aside-navbar__items:hover {
     background-color: #059646;
 }
 
