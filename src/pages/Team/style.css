@@ -1,0 +1,100 @@
+.team_header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team_title {
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.player_content {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+
+.player_aside {
+    background-color: #625f83;
+    padding: 15px;
+    width: 45%;
+    border-radius: 20px;
+}
+
+.player_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.player_photo img {
+    width: 80px;
+    height: auto;
+    border-radius: 100%;
+}
+
+.player_age {
+    width: 100%;
+    text-align: center;
+}
+
+.player_details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.player_status {
+    margin-left: 50px;
+    width: 55%;
+    background-image: linear-gradient(to right, #8985bb, #454266);
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.player_status-header {
+    padding: 15px;
+}
+
+.player_status-header h1 {
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+}
+
+.select-content {
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+.player_games {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+
+    margin-bottom: 20px;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 25px;
+}
+
+
+.player_games-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 5px;
+    column-gap: 15px;
+}
+
+.player_score {
+    text-align: end;
+}
+
+.player_score {
+    color: #fff;
+}
