@@ -48,17 +48,17 @@ export const Home: React.FC = () => {
 
     useEffect(() => {
 
-        // const fetchData = async () => {
-        //     const response = await api.get('/teams?country=brazil');
-        //     console.log(response);
-        //     const endOffset = itemOffset + itemsPerPage;
-        //     setAllTeams(response.data.response);
-        //     setCurrentItems(response.data.response.slice(itemOffset, endOffset));
-        //     setPageCount(Math.ceil(response.data.response.length / itemsPerPage))
-        // }
+        const fetchData = async () => {
+            const response = await api.get('/teams?country=brazil');
+            console.log(response);
+            const endOffset = itemOffset + itemsPerPage;
+            setAllTeams(response.data.response);
+            setCurrentItems(response.data.response.slice(itemOffset, endOffset));
+            setPageCount(Math.ceil(response.data.response.length / itemsPerPage))
+        }
 
-        // fetchData()
-        //     .catch((err) => console.log(err));
+        fetchData()
+            .catch((err) => console.log(err));
 
     }, [])
 
@@ -69,29 +69,35 @@ export const Home: React.FC = () => {
         const endOffset = itemOffset + itemsPerPage;
 
         setCurrentItems(allTeams.slice(itemOffset, endOffset));
-        console.log('comeco', itemOffset);
-        console.log('fim', endOffset);
     };
 
+    const filterItems = (item: any) => {
+        const filteredTeams = allTeams.filter((el) => {
+            return el.team.name.toLocaleLowerCase().includes(item.toLowerCase());
+        })
 
-    //Get current posts
+        setPageCount(Math.ceil(filteredTeams.length / itemsPerPage))
+        setCurrentItems(filteredTeams);
+    }
 
     return (
         <>
-            <Search />
+            <Search filter={filterItems} />
             <Teams currentTeams={currentItems} />
 
-            {/* <ReactPaginate
-                breakLabel="..."
-                nextLabel="next >"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={3}
-                marginPagesDisplayed={2}
-                pageCount={pageCount}
-                previousLabel="< previous"
-                containerClassName={"pagination"}
-                activeClassName={"active"}
-            /> */}
+            <div className='pagination_content'>
+                <ReactPaginate
+                    breakLabel="..."
+                    nextLabel="próximo >"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    pageCount={pageCount}
+                    previousLabel="< anterior"
+                    containerClassName={"pagination"}
+                    activeClassName={"active"}
+                />
+            </div>
         </>
     )
 
