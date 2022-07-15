@@ -2,7 +2,7 @@
     /* For browsers that do not support gradients  */
     background-color: #625f83;
 
-    background-image: linear-gradient(to right, #8985bb , #454266);
+    background-image: linear-gradient(to right, #8985bb, #454266);
     border-radius: 25px;
 
     display: flex;
@@ -16,8 +16,9 @@
     align-items: center;
     justify-content: center;
 
-    background-color: #454266; 
+    background-color: #454266;
     width: 30%;
+    padding: 8px;
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
 }
@@ -25,6 +26,7 @@
 .team-cards__aside img {
     width: 200px;
     height: auto;
+    max-height: 200px;
 }
 
 .team-cards__content {

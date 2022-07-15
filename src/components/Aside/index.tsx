@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 //styles
 import './style.css';
@@ -18,12 +19,14 @@ export const Aside = () => {
             <nav className='aside-navbar__nav'>
                 <ul>
                     <li>
-                        <div className='aside-navbar__items'>
-                            <div className='aside-navbar__icon'>
-                                <FontAwesomeIcon icon={faHouse} />
+                        <Link to="/">
+                            <div className='aside-navbar__items'>
+                                <div className='aside-navbar__icon'>
+                                    <FontAwesomeIcon icon={faHouse} />
+                                </div>
+                                <span>Home</span>
                             </div>
-                            <span>Home</span>
-                        </div>
+                        </Link>
                     </li>
                 </ul>
             </nav>

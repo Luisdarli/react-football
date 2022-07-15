@@ -1,31 +1,54 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 //styles
 import './style.css'
-export const Teams = ({ currentTeams }: any) => {
+
+//Interfaces
+
+interface TeamProps {
+    id: number;
+    logo: string;
+    name: string;
+}
+
+interface VenueProps {
+    capacity: number;
+    name: string;
+    address: string;
+    city: string;
+}
+interface CurrentTeamsProps {
+    team: TeamProps;
+    venue: VenueProps;
+}
+interface TeamsProps {
+    currentTeams: CurrentTeamsProps[];
+}
+
+export const Teams = ({ currentTeams }: TeamsProps) => {
     return (
-
-        <div className='team-cards'>
-            {/* <ul>
+        <>
             {currentTeams.map((team: any) => (
-                <li key={team.team.id}>{team.team.name}</li>
-            ))}
-        </ul> */}
-            <aside className='team-cards__aside'>
-                <img src={require('../../assets/logo.png')} alt="Logo" />
-            </aside>
+                <Link to={`/team/${team.team.id}`}>
+                    <div key={team.team.id} className='team-cards'>
+                        <aside className='team-cards__aside'>
+                            <img src={team.team.logo} alt="Logo" />
+                        </aside>
 
-            <div className='team-cards__content'>
+                        <div className='team-cards__content'>
+                            <div className="team-cards--content__header">
+                                <h1 className='team-cards__title'>{team.team.name}</h1>
+                                <span>Capacidade: <p className='team-cards__highlight'>{team.venue.capacity}</p></span>
+                            </div>
+                            <span className='team-cards__venue'>Estádio: <strong>{team.venue.name}</strong></span>
+                            <p>{team.venue.address} - {team.venue.city}</p>
+                        </div>
 
-                <div className="team-cards--content__header">
-                    <h1 className='team-cards__title'>Corinthians</h1>
-                    <span>Capacidade: <p className='team-cards__highlight'>76212</p></span>
-                </div>
-
-                <span className='team-cards__venue'>Estádio: <strong>Néo Quimica Arena</strong></span>
-                <p>Rua, Cidade - Estado, número </p>
-            </div>
-
-        </div>
+                    </div>
+                </Link>
+            ))
+            }
+        </>
     );
 }
