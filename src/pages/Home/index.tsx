@@ -44,13 +44,12 @@ export const Home: React.FC = () => {
     const [currentItems, setCurrentItems] = useState<ResponseApi[]>([]);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
-    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [itemsPerPage] = useState(10);
 
     useEffect(() => {
 
         const fetchData = async () => {
             const response = await api.get('/teams?country=brazil');
-            console.log(response);
             const endOffset = itemOffset + itemsPerPage;
             setAllTeams(response.data.response);
             setCurrentItems(response.data.response.slice(itemOffset, endOffset));

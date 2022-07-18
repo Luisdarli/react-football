@@ -30,8 +30,8 @@ export const Teams = ({ currentTeams }: TeamsProps) => {
     return (
         <>
             {currentTeams.map((team: any) => (
-                <Link to={`/team/${team.team.id}`}>
-                    <div key={team.team.id} className='team-cards'>
+                <Link key={team.team.id} to={`/team/${team.team.id}`}>
+                    <div className='team-cards'>
                         <aside className='team-cards__aside'>
                             <img src={team.team.logo} alt="Logo" />
                         </aside>

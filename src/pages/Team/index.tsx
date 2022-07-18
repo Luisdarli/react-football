@@ -1,14 +1,58 @@
+import { faShirt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { RFSelect } from '../../components/Select';
+import { api } from '../../services/api';
 
 //Styles
 import './style.css';
 
 
+//Interfaces
+interface AllPlayersProps {
+    age: number;
+    id: number;
+    name: string;
+    number: number;
+    photo: string;
+    position: string;
+    formattedPosition: string;
+}
+
+interface CurrentTeamProps {
+    id: number,
+    name: string,
+    logo: string,
+}
+
+//Enums
+enum PlayerPosition {
+    Goalkeeper = "Goleiro",
+    Defender = "Defensor",
+    Midfielder = "Meio-campista",
+    Attacker = "Atacante",
+}
+
 export const Team: React.FC = () => {
+    const { id } = useParams();
+
     const [scoreColor, setScoreColor] = useState('red');
+    const [allPlayers, setAllPlayers] = useState<AllPlayersProps[]>([]);
+    const [currentTeam, setCurrentTeam] = useState<CurrentTeamProps>();
 
     useEffect(() => {
+        api.get(`/players/squads?team=${id}`)
+            .then((resp) => {
+                resp.data.response[0].players.forEach((el: any) => {
+                    const position = el.position
+                    el.formattedPosition = PlayerPosition[position as keyof typeof PlayerPosition];
+
+                })
+                setAllPlayers(resp.data.response[0].players);
+                setCurrentTeam(resp.data.response[0].team);
+            }
+            )
         setScoreColor('#21f793');
     }, [])
 
@@ -19,26 +63,36 @@ export const Team: React.FC = () => {
     return (
         <>
             <header className="team_header">
-                <img src="https://media.api-sports.io/football/teams/131.png" alt="Team Logo" />
-                <h1 className='team_title'>S.C.C.P Sport Club Corinthians Paulista</h1>
+                <img src={currentTeam?.logo} alt="Team Logo" />
+                <h1 className='team_title'>{currentTeam?.name}</h1>
             </header>
 
             <section className="player_content">
                 <aside className='player_aside'>
-                    <div className="player_info">
-                        <div className="player_photo">
-                            <img src="https://media.api-sports.io/football/players/10229.png" alt="Player"></img>
-                        </div>
-                        <div className="player_age">
-                            <h6 className="player_name">Cassio Ramos</h6>
-                            <div className='player_details'>
-                                <p>Idade: 36</p>
-                                <p>Nasc.: Brazil</p>
-                                <p>Altura: 195 cm</p>
-                                <p>Peso: 92 kg</p>
+                    {allPlayers.map((player) => (
+                        <div key={player.id} className="player_info">
+                            <div className="player_photo">
+                                <img src={player.photo} alt="Player"></img>
+                            </div>
+
+                            <div className='player_wrapper'>
+                                <div className='player_details'>
+                                    <span>
+                                        <h5 className="player_name">{player.name}</h5>
+                                        {/* {getPlayerPosition(player.position)} */}
+                                    </span>
+                                    <span>#{player.id}</span>
+                                </div>
+
+                                {player.number &&
+                                    <div className="player_details-shirt">
+                                        <FontAwesomeIcon icon={faShirt} />
+                                        <span>{player.number}</span>
+                                    </div>
+                                }
                             </div>
                         </div>
-                    </div>
+                    ))}
                 </aside>
 
                 <div className='player_status'>

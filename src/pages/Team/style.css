@@ -20,6 +20,8 @@
     padding: 15px;
     width: 45%;
     border-radius: 20px;
+    max-height: 640px;
+    overflow: auto;
 }
 
 .player_info {
@@ -29,6 +31,8 @@
     background-color: #fff;
     padding: 10px;
     border-radius: 15px;
+    margin: 8px 0;
+    cursor: pointer;
 }
 
 .player_photo img {
@@ -37,14 +41,50 @@
     border-radius: 100%;
 }
 
-.player_age {
+.player_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     width: 100%;
-    text-align: center;
 }
 
 .player_details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.player_details span {
+    color: #1c1a35;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.player_name {
+    font-weight: 600;
+}
+
+
+.player_details-shirt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.player_details-shirt svg {
+    color: #191634;
+    font-size: 45px;
+}
+
+.player_details-shirt span {
+    position: absolute;
+    bottom: 5px;
+    font-weight: 600;
+    color: #fff;
 }
 
 .player_status {
