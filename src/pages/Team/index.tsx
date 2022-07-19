@@ -1,6 +1,6 @@
 import { faShirt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { RFSelect } from '../../components/Select';
 import { api } from '../../services/api';
@@ -40,25 +40,42 @@ export const Team: React.FC = () => {
     const [scoreColor, setScoreColor] = useState('red');
     const [allPlayers, setAllPlayers] = useState<AllPlayersProps[]>([]);
     const [currentTeam, setCurrentTeam] = useState<CurrentTeamProps>();
+    const [playerStatus, setPlayerStatus] = useState([]);
 
-    useEffect(() => {
-        api.get(`/players/squads?team=${id}`)
-            .then((resp) => {
-                resp.data.response[0].players.forEach((el: any) => {
-                    const position = el.position
-                    el.formattedPosition = PlayerPosition[position as keyof typeof PlayerPosition];
 
-                })
-                setAllPlayers(resp.data.response[0].players);
-                setCurrentTeam(resp.data.response[0].team);
-            }
-            )
-        setScoreColor('#21f793');
+    const getYear = useCallback(() => {
+        return new Date().getFullYear();
     }, [])
 
-    const getYear = () => {
-        return new Date().getFullYear();
-    }
+    const getPlayersBySquad = useCallback(async () => {
+        const resp = await api.get(`/players/squads?team=${id}`);
+
+        resp.data.response[0].players.forEach((el: any) => {
+            const position = el.position
+            el.formattedPosition = PlayerPosition[position as keyof typeof PlayerPosition];
+        })
+
+        setAllPlayers(resp.data.response[0].players);
+        setCurrentTeam(resp.data.response[0].team);
+    }, [])
+
+    const getPlayerStatusPerSeason = useCallback(async (player: any) => {
+        const response = await api.get(`/players?id=${player}&season=${getYear()}`);
+        setPlayerStatus(response.data.response[0].statistics);
+    }, [])
+
+    useEffect(() => {
+        getPlayersBySquad()
+            .catch(err => console.log(err))
+    }, []);
+
+
+    useEffect(() => {
+        getPlayerStatusPerSeason('10229')
+            .catch(err => console.log(err));
+    }, [])
+
+
 
     return (
         <>
@@ -79,7 +96,6 @@ export const Team: React.FC = () => {
                                 <div className='player_details'>
                                     <span>
                                         <h5 className="player_name">{player.name}</h5>
-                                        {/* {getPlayerPosition(player.position)} */}
                                     </span>
                                     <span>#{player.id}</span>
                                 </div>
@@ -100,7 +116,11 @@ export const Team: React.FC = () => {
                         <h1>Status temporada {getYear()}</h1>
                     </header>
                     <div className='select-content'>
-                        <RFSelect />
+                        {
+                            playerStatus.length > 0 && (
+                                <RFSelect options={playerStatus} />
+                            )
+                        }
                     </div>
 
 
