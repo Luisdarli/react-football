@@ -7,6 +7,7 @@ import './style.css';
 //Interface
 interface RFSelectProps {
     options: any[];
+    selectedItem: (championship: any) => void;
 }
 
 export const RFSelect: React.FC<RFSelectProps> = (props) => {
@@ -30,9 +31,13 @@ export const RFSelect: React.FC<RFSelectProps> = (props) => {
 
 
     return (
-        <Select
-            defaultValue={formattedOptions[0]}
-            options={formattedOptions}
-        />
+        <>
+            {formattedOptions.length > 0 && (
+                <Select onChange={(e) => { props.selectedItem(e.target.value) }}
+                    defaultValue={[formattedOptions[0]]}
+                    options={formattedOptions}
+                />
+            )}
+        </>
     )
 }

@@ -26,6 +26,43 @@ interface CurrentTeamProps {
     logo: string,
 }
 
+interface TeamProps {
+    id: number,
+    name: string,
+    logo: string
+}
+
+interface LeagueProps {
+    id: number,
+    name: string,
+}
+
+interface GamesProps {
+    appearences: number,
+    lineups: number,
+    minutes: string,
+    rating: number
+}
+
+interface GoalsProps {
+    total: number,
+    conceded: number,
+    assists: number,
+    saves: number
+}
+
+interface CardsProps {
+    yellow: number,
+    red: number
+}
+interface PlayerStatusProps {
+    team: TeamProps,
+    league: LeagueProps,
+    games: GamesProps,
+    goals: GoalsProps,
+    cards: CardsProps
+}
+
 //Enums
 enum PlayerPosition {
     Goalkeeper = "Goleiro",
@@ -40,7 +77,8 @@ export const Team: React.FC = () => {
     const [scoreColor, setScoreColor] = useState('red');
     const [allPlayers, setAllPlayers] = useState<AllPlayersProps[]>([]);
     const [currentTeam, setCurrentTeam] = useState<CurrentTeamProps>();
-    const [playerStatus, setPlayerStatus] = useState([]);
+    const [playerStatus, setPlayerStatus] = useState<PlayerStatusProps[]>([]);
+    const [selectedChampionship, setSelectedChampionship] = useState(0);
 
 
     const getYear = useCallback(() => {
@@ -64,17 +102,18 @@ export const Team: React.FC = () => {
         setPlayerStatus(response.data.response[0].statistics);
     }, [])
 
-    useEffect(() => {
-        getPlayersBySquad()
-            .catch(err => console.log(err))
-    }, []);
-
-
-    useEffect(() => {
-        getPlayerStatusPerSeason('10229')
-            .catch(err => console.log(err));
+    const handleSelectedChampionship = useCallback((championShip) => {
+        console.log(championShip);
+        setSelectedChampionship(championShip);
     }, [])
 
+    useEffect(() => {
+        getPlayersBySquad()
+            .catch(err => console.log(err));
+
+        getPlayerStatusPerSeason('10229')
+            .catch(err => console.log(err));
+    }, []);
 
 
     return (
@@ -118,41 +157,44 @@ export const Team: React.FC = () => {
                     <div className='select-content'>
                         {
                             playerStatus.length > 0 && (
-                                <RFSelect options={playerStatus} />
+                                <RFSelect options={playerStatus} selectedItem={handleSelectedChampionship} />
                             )
                         }
                     </div>
 
+                    {playerStatus.length > 0 && (
+                        <>
+                            <div className="player_games">
+                                <h3>Jogos ⚽</h3>
 
-                    <div className="player_games">
-                        <h3>Jogos ⚽</h3>
+                                <div className='player_games-grid'>
+                                    <p>Relacionado: {playerStatus[selectedChampionship].games.appearences}</p>
+                                    <p>Jogos: {playerStatus[selectedChampionship].games.lineups}</p>
+                                    <p>Minutos: {playerStatus[selectedChampionship].games.minutes}</p>
+                                </div>
+                            </div>
 
-                        <div className='player_games-grid'>
-                            <p>Relacionado: 12</p>
-                            <p>Jogos: 12</p>
-                            <p>Minutos: 1080</p>
-                        </div>
-                    </div>
+                            <div className='player_games'>
+                                <h3>Gols 🥅</h3>
 
-                    <div className='player_games'>
-                        <h3>Gols 🥅</h3>
+                                <div className='player_games-grid'>
+                                    <p>Total: {playerStatus[selectedChampionship].goals.total}</p>
+                                    <p>Assist.: {playerStatus[selectedChampionship].goals.assists}</p>
+                                    <p>Defesas: {playerStatus[selectedChampionship].goals.saves}</p>
+                                </div>
+                            </div>
 
-                        <div className='player_games-grid'>
-                            <p>Total: 2</p>
-                            <p>Assist.: 3</p>
-                            <p>Defesas: 48</p>
-                        </div>
-                    </div>
+                            <div className='player_games'>
+                                <h3>Cartões 🟥</h3>
 
-                    <div className='player_games'>
-                        <h3>Cartões 🟥</h3>
-
-                        <div className='player_games-grid'>
-                            <span>🟥: 0</span>
-                            <span>🟨: 2</span>
-                        </div>
-                    </div>
-                    <h1 className='player_score'>Nota: <strong style={{ color: scoreColor }}>7.2</strong></h1>
+                                <div className='player_games-grid'>
+                                    <span>🟥: {playerStatus[selectedChampionship].cards.red}</span>
+                                    <span>🟨: {playerStatus[selectedChampionship].cards.yellow}</span>
+                                </div>
+                            </div>
+                            <h1 className='player_score'>Nota: <strong style={{ color: scoreColor }}>7.2</strong></h1>
+                        </>
+                    )}
                 </div>
             </section>
         </>
