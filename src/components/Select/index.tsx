@@ -1,20 +1,43 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Select from 'react-select'
 
 //Styles
 import './style.css';
 
-export const RFSelect = () => {
-    const options = [
-        { value: '1', label: '1' },
-        { value: '2', label: '2' },
-        { value: '3', label: '3' }
-    ]
+//Interface
+interface RFSelectProps {
+    options: any[];
+    selectedItem: (championship: any) => void;
+}
+
+export const RFSelect: React.FC<RFSelectProps> = (props) => {
+    const [formattedOptions, setFormattedOptions] = useState<any>([]);
+
+    const formatOptions = useCallback(async () => {
+        let result: any[] = [];
+        props.options.forEach((option: any, idx: any) => {
+            let obj = {
+                label: option.league.name,
+                value: idx
+            }
+            result.push(obj);
+        })
+        setFormattedOptions(result);
+    }, [])
+
+    useEffect(() => {
+        formatOptions();
+    }, [])
+
 
     return (
-        <Select
-            defaultValue={[options[0]]}
-            options={options}
-        />
+        <>
+            {formattedOptions.length > 0 && (
+                <Select onChange={(e) => { props.selectedItem(e.target.value) }}
+                    defaultValue={[formattedOptions[0]]}
+                    options={formattedOptions}
+                />
+            )}
+        </>
     )
 }
