@@ -33,7 +33,7 @@ export const RFSelect: React.FC<RFSelectProps> = (props) => {
     return (
         <>
             {formattedOptions.length > 0 && (
-                <Select onChange={(e) => { props.selectedItem(e.target.value) }}
+                <Select onChange={(e) => { props.selectedItem(e.value) }}
                     defaultValue={[formattedOptions[0]]}
                     options={formattedOptions}
                 />
