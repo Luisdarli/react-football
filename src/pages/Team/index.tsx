@@ -79,6 +79,7 @@ export const Team: React.FC = () => {
     const [currentTeam, setCurrentTeam] = useState<CurrentTeamProps>();
     const [playerStatus, setPlayerStatus] = useState<PlayerStatusProps[]>([]);
     const [selectedChampionship, setSelectedChampionship] = useState(0);
+    const [selectedPlayer, setSelectedPlayer] = useState<number>();
 
 
     const getYear = useCallback(() => {
@@ -95,6 +96,7 @@ export const Team: React.FC = () => {
 
         setAllPlayers(resp.data.response[0].players);
         setCurrentTeam(resp.data.response[0].team);
+        setSelectedPlayer(resp.data.response[0].players[0].id)
     }, [])
 
     const getPlayerStatusPerSeason = useCallback(async (player: any) => {
@@ -103,17 +105,23 @@ export const Team: React.FC = () => {
     }, [])
 
     const handleSelectedChampionship = useCallback((championShip) => {
-        console.log(championShip);
         setSelectedChampionship(championShip);
     }, [])
+
+    const handleSelectedPlayer = useCallback((player) => {
+        setSelectedPlayer(player);
+    }, [])
+
 
     useEffect(() => {
         getPlayersBySquad()
             .catch(err => console.log(err));
-
-        getPlayerStatusPerSeason('10229')
-            .catch(err => console.log(err));
     }, []);
+
+    useEffect(() => {
+        getPlayerStatusPerSeason(selectedPlayer?.toString())
+            .catch(err => console.log(err));
+    }, [selectedPlayer])
 
 
     return (
@@ -126,7 +134,7 @@ export const Team: React.FC = () => {
             <section className="player_content">
                 <aside className='player_aside'>
                     {allPlayers.map((player) => (
-                        <div key={player.id} className="player_info">
+                        <div key={player.id} className={`player_info ${selectedPlayer === player.id ? 'selected' : ''}`} onClick={() => handleSelectedPlayer(player.id)}>
                             <div className="player_photo">
                                 <img src={player.photo} alt="Player"></img>
                             </div>
@@ -192,7 +200,9 @@ export const Team: React.FC = () => {
                                     <span>🟨: {playerStatus[selectedChampionship].cards.yellow}</span>
                                 </div>
                             </div>
-                            <h1 className='player_score'>Nota: <strong style={{ color: scoreColor }}>7.2</strong></h1>
+
+                            <h1 className='player_score'>Nota: <strong style={{ color: scoreColor }}>{Number(playerStatus[selectedChampionship].games.rating).toFixed(2)}</strong></h1>
+
                         </>
                     )}
                 </div>
