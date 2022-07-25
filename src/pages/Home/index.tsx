@@ -47,27 +47,35 @@ export const Home: React.FC = () => {
     const [itemsPerPage] = useState(10);
 
     useEffect(() => {
-
-        const fetchData = async () => {
-            const response = await api.get('/teams?country=brazil');
-            const endOffset = itemOffset + itemsPerPage;
-            setAllTeams(response.data.response);
-            setCurrentItems(response.data.response.slice(itemOffset, endOffset));
-            setPageCount(Math.ceil(response.data.response.length / itemsPerPage))
+        const fetchData = () => {
+            api.get('/teams?country=brazil').then((response) => {
+                const endOffset = itemOffset + itemsPerPage;
+                setAllTeams(response.data.response);
+                setCurrentItems(response.data.response.slice(0, 10));
+                setPageCount(Math.ceil(response.data.response.length / itemsPerPage));
+            }).catch(err => console.log(err))
         }
 
-        fetchData()
-            .catch((err) => console.log(err));
 
+        fetchData();
+    }, [])
+
+    useEffect(() => {
+        console.log('chegou');
+        if (currentItems.length > 0) {
+            handlePageClick({
+                selected: 0
+            });
+        }
     }, [])
 
     const handlePageClick = (event: any) => {
-        const newOffset = (event.selected * itemsPerPage) % allTeams.length;
+        const newOffset = ((event.selected + 1) * itemsPerPage) % allTeams.length;
         setItemOffset(newOffset);
 
-        const endOffset = itemOffset + itemsPerPage;
+        const endOffset = newOffset + itemsPerPage;
 
-        setCurrentItems(allTeams.slice(itemOffset, endOffset));
+        setCurrentItems(allTeams.slice(newOffset, endOffset));
     };
 
     const filterItems = (item: any) => {
