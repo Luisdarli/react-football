@@ -1,0 +1,18 @@
+.highlight {
+    font-weight: 600;
+    color: #08d565;
+}
+
+.aside-navbar__logo {
+    padding: 15px 50px;
+}
+
+.aside-navbar__logo span {
+    color: #fff;
+    font-size: 2rem;
+}
+
+.aside-navbar__logo img {
+    width: 80px;
+    height: auto;
+}
