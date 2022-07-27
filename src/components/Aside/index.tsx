@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 //styles
@@ -10,11 +10,9 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons'
 
 export const Aside = () => {
     return (
+
         <aside className='aside-navbar'>
-            <div className='aside-navbar__logo'>
-                <span>React<b className='highlight'>Football</b></span>
-                <img src={require('../../assets/logo.png')} alt="Logo" />
-            </div>
+
 
             <nav className='aside-navbar__nav'>
                 <ul>
@@ -23,8 +21,8 @@ export const Aside = () => {
                             <div className='aside-navbar__items'>
                                 <div className='aside-navbar__icon'>
                                     <FontAwesomeIcon icon={faHouse} />
+                                    <span>Home</span>
                                 </div>
-                                <span>Home</span>
                             </div>
                         </Link>
                     </li>

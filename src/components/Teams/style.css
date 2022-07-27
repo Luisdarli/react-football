@@ -24,14 +24,15 @@
 }
 
 .team-cards__aside img {
-    width: 200px;
+    width: 90%;
+    min-width: 80px;
     height: auto;
-    max-height: 200px;
 }
 
 .team-cards__content {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     padding: 20px;
     width: 100%;
 
@@ -41,6 +42,7 @@
 .team-cards--content__header {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
 }
@@ -50,7 +52,7 @@
 }
 
 .team-cards__highlight {
-    font-size: 20px;
+    font-size: 1rem;
     color: #08d565;
     font-weight: 600;
 }

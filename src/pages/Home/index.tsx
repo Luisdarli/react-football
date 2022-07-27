@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
 //Styles
@@ -40,44 +40,41 @@ interface ResponseApi {
 export const Home: React.FC = () => {
 
     const [allTeams, setAllTeams] = useState<ResponseApi[]>([]);
-
     const [currentItems, setCurrentItems] = useState<ResponseApi[]>([]);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
     const [itemsPerPage] = useState(10);
 
-    useEffect(() => {
 
-        const fetchData = async () => {
-            const response = await api.get('/teams?country=brazil');
-            const endOffset = itemOffset + itemsPerPage;
-            setAllTeams(response.data.response);
-            setCurrentItems(response.data.response.slice(itemOffset, endOffset));
-            setPageCount(Math.ceil(response.data.response.length / itemsPerPage))
-        }
-
-        fetchData()
-            .catch((err) => console.log(err));
-
+    const fetchData = useCallback(async () => {
+        const response = await api.get('/teams?country=brazil');
+        const endOffset = itemOffset + itemsPerPage;
+        setAllTeams(response.data.response);
+        setCurrentItems(response.data.response.slice(0, 10))
+        setPageCount(Math.ceil(response.data.response.length / itemsPerPage));
     }, [])
 
-    const handlePageClick = (event: any) => {
-        const newOffset = (event.selected * itemsPerPage) % allTeams.length;
+    const handlePageClick = useCallback((event) => {
+        const newOffset = ((event.selected) * itemsPerPage) % allTeams.length;
         setItemOffset(newOffset);
+        const endOffset = newOffset + itemsPerPage;
+        setCurrentItems(allTeams.slice(newOffset, endOffset));
+    }, [allTeams, itemsPerPage]);
 
-        const endOffset = itemOffset + itemsPerPage;
-
-        setCurrentItems(allTeams.slice(itemOffset, endOffset));
-    };
-
-    const filterItems = (item: any) => {
-        const filteredTeams = allTeams.filter((el) => {
+    const filterItems = useCallback((item: any) => {
+        const filteredTeams = allTeams?.filter((el) => {
             return el.team.name.toLocaleLowerCase().includes(item.toLowerCase());
         })
+        if (filteredTeams) {
+            setPageCount(Math.ceil(filteredTeams.length / itemsPerPage))
+            setCurrentItems(filteredTeams);
+        }
+    }, [])
 
-        setPageCount(Math.ceil(filteredTeams.length / itemsPerPage))
-        setCurrentItems(filteredTeams);
-    }
+    useEffect(() => {
+        fetchData();
+    }, []);
+
 
     return (
         <>
@@ -89,8 +86,8 @@ export const Home: React.FC = () => {
                     breakLabel="..."
                     nextLabel="próximo >"
                     onPageChange={handlePageClick}
-                    pageRangeDisplayed={3}
-                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={1}
+                    marginPagesDisplayed={1}
                     pageCount={pageCount}
                     previousLabel="< anterior"
                     containerClassName={"pagination"}
