@@ -18,8 +18,8 @@ export const Search = ({ filter }: SearchProps) => {
     return (
         <div className='main-input'>
             <span>
-                <input type="text" placeholder='Pesquise seu time' name='search' onChange={(event) => setSearchInput(event.target.value)} value={searchInput} />
-                <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => filter(searchInput)} />
+                <input data-testid="filterInput" type="text" placeholder='Pesquise seu time' name='search' onChange={(event) => setSearchInput(event.target.value)} value={searchInput} />
+                <FontAwesomeIcon data-testid="icon" icon={faMagnifyingGlass} onClick={() => filter(searchInput)} />
             </span>
         </div>
     )
