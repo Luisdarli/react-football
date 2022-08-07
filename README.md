@@ -1,5 +1,5 @@
 
-<h1 align="center"> ReactFootball </h1>
+<h1 align="center"> ReactFootball <img align="center" width="80" height="80" src="./src/assets/logo.png" alt="logo"> </h1>
 
 <h2 align="center">An academic-level project designed to look up some teams and the status of their players</h2>
 
