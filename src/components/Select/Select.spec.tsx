@@ -22,8 +22,7 @@ describe('React Football Select Component', () => {
         )
 
         expect(RFSelectProps.options).toEqual(
-            expect.arrayContaining(["Brasileirao"]),
-            expect.arrayContaining(["Paulista"])
+            expect.arrayContaining(["Brasileirao", "Paulista"]),
         )
     })
 })
